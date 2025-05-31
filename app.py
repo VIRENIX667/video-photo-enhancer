@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['PROCESSED_FOLDER'] = 'static/processed'
 
-# ✅ Создаем папки при запуске, если их нет
+# ✅ Создаем директории, если их нет
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
 
@@ -24,14 +24,9 @@ def index():
 
             processed_filename = 'processed_' + filename
             processed_path = os.path.join(app.config['PROCESSED_FOLDER'], processed_filename)
-
             shutil.copy(upload_path, processed_path)
 
-            return render_template(
-                'index.html',
-                filename=filename,
-                is_video=is_video_file(filename)
-            )
+            return render_template('index.html', filename=filename, is_video=is_video_file(filename))
     return render_template('index.html')
 
 if __name__ == '__main__':
